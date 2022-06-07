@@ -7,7 +7,7 @@
 
             MailMessage mail = new MailMessage();
             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            mail.From = new MailAddress("warlordgmaing123yt@gmail.com");
+            mail.From = new MailAddress("sender's email");
             mail.To.Add(Email);
 
 
@@ -18,7 +18,7 @@
 
             SmtpServer.Port = 587;
             SmtpServer.UseDefaultCredentials = false;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("warlordgmaing123yt@gmail.com", "password");
+            SmtpServer.Credentials = new System.Net.NetworkCredential("sender's email", "password");
             SmtpServer.EnableSsl = true;
             SmtpServer.Send(mail);
 

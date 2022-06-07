@@ -7,9 +7,9 @@ namespace NewListWizard.Models
 {
     public partial class NewListWizardContext : DbContext
     {
-        //public NewListWizardContext()
-        //{
-        //}
+        public NewListWizardContext()
+        {
+        }
 
         public NewListWizardContext(DbContextOptions<NewListWizardContext> options)
             : base(options)
@@ -34,7 +34,7 @@ namespace NewListWizard.Models
             modelBuilder.Entity<CsvContent>(entity =>
             {
                 entity.HasKey(e => e.CsvId)
-                    .HasName("PK__CsvConte__AA1473CD575E0E3F");
+                    .HasName("PK__CsvConte__AA1473CD9E1CD6C6");
 
                 entity.ToTable("CsvContent");
 
@@ -71,7 +71,7 @@ namespace NewListWizard.Models
                     .WithMany(p => p.CsvContents)
                     .HasForeignKey(d => d.ListId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CsvConten__listI__3C69FB99");
+                    .HasConstraintName("FK__CsvConten__listI__4D94879B");
             });
 
             modelBuilder.Entity<UserInfo>(entity =>
@@ -122,7 +122,7 @@ namespace NewListWizard.Models
             modelBuilder.Entity<WizardList>(entity =>
             {
                 entity.HasKey(e => e.ListId)
-                    .HasName("PK__WizardLi__7D4CA77BE4FB053D");
+                    .HasName("PK__WizardLi__7D4CA77B4F7535AF");
 
                 entity.ToTable("WizardList");
 
@@ -136,6 +136,8 @@ namespace NewListWizard.Models
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("date")
                     .HasColumnName("createdDate");
+
+                entity.Property(e => e.IsCsv).HasColumnName("isCsv");
 
                 entity.Property(e => e.IsDeleted).HasColumnName("isDeleted");
 
@@ -154,7 +156,7 @@ namespace NewListWizard.Models
                     .WithMany(p => p.WizardLists)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__WizardLis__userI__38996AB5");
+                    .HasConstraintName("FK__WizardLis__userI__49C3F6B7");
             });
 
             OnModelCreatingPartial(modelBuilder);

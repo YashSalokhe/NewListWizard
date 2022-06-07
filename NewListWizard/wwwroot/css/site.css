@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.received-data{
+    width: 2rem;
+    height: 4rem;
+    
+}

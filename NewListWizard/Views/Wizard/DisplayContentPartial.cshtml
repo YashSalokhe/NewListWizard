@@ -1,0 +1,36 @@
+﻿@model NewListWizard.Models.DisplayContent
+@{
+    ViewData["Title"] = "DisplayContentPartial";
+  
+}
+
+
+        
+        <h1 >Missing fields are @Model.MissingField</h1>
+        <h1>Imported fields are @Model.ImportedField</h1>
+
+
+        <table class="table table-bordered">
+            <tbody>
+                @foreach (var cell in Model.csvContents)
+                {
+                    <tr>
+                        <td>
+                            @cell.FirstName
+                        </td>
+                        <td>
+                            @cell.LastName
+                        </td>
+                        <td>
+                            @cell.CompanyName
+                        </td>
+                        <td>
+                            @cell.Title
+                        </td>
+                        <td>
+                            @cell.Email
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>

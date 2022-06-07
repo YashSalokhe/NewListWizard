@@ -1,0 +1,49 @@
+﻿@model NewListWizard.Models.Upload
+@{
+    ViewData["Title"] = "FileUploadPartial";
+    Layout = null;
+}
+<head>
+    <script src="~/js/site.js"></script>
+</head>
+<div id="fileUpload"></div>
+
+   <div class="modal fade bd-example-modal-lg" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="form-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+<form enctype="multipart/form-data" id="uploadpart" method="post" >
+    <dl>
+        <dt>
+            <label asp-for="@Model.File"></label>
+        </dt>
+        <dd>
+            <input asp-for="@Model.File" type="file" id="uploadfile" >
+            <span asp-validation-for="@Model.File"></span>
+        </dd>
+         <div class="container">
+         
+     </div>
+    </dl>
+    <div class="form-group">
+                <input type="button" onclick="onUploadSubmit()"  value="Finish" class="btn btn-primary" />
+            </div>
+
+    
+</form>
+
+<p>
+    <a @*asp-action="CreateNewList" asp-controller="Wizard"*@ @* onclick="showInPopup('@Url.Action("CreateNewList","Wizard",null,Context.Request.Scheme)','New List Wizard')"*@ class="btn btn-success button2">Back to list</a>
+</p>
+
+<div id="showContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -52,7 +52,7 @@ namespace NewListWizard.Controllers
             {
 
                 ViewBag.response = await authenticationService.LoginUserAsync(loginUser);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Wizard");
               
             }
             return View(loginUser);

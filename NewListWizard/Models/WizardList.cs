@@ -14,11 +14,12 @@ namespace NewListWizard.Models
         public int UserId { get; set; }
         public string ListName { get; set; } = null!;
         public string AssignedTo { get; set; } = null!;
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public byte IsCsv { get; set; }
         public byte IsDeleted { get; set; }
 
-        public virtual UserInfo User { get; set; } = null!;
+        public virtual UserInfo? User { get; set; } = null!;
         public virtual ICollection<CsvContent> CsvContents { get; set; }
     }
 }

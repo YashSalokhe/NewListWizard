@@ -1,0 +1,72 @@
+﻿    @model IEnumerable<NewListWizard.Models.WizardList>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <script type="text/javascript">
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};    
+    </script>
+</head>
+<h1>Index</h1>
+
+<div id="placeHolder"></div>
+@*<p>
+    <a asp-action="CreateNewList" asp-controller="Wizard" class="btn btn-success button2">Create new List</a>
+</p>*@
+<p>
+    <a  class="btn btn-success button2" onclick="showInPopup('@Url.Action("CreateNewListPartial","Wizard",null,Context.Request.Scheme)','New List Wizard')" >Create new List</a>
+</p>
+<p>
+    <button type="submit" asp-action="Delete" >Delete</button>
+</p>
+<table class="table table-bordered" id="gridView">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+             @*   @Html.DisplayNameFor(model => model.ListName)*@ListName
+            </th>
+            <th>
+             @*   @Html.DisplayNameFor(model => model.AssignedTo)*@Assigned to
+            </th>
+            <th>
+             @*   @Html.DisplayNameFor(model => model.CreatedDate)*@Created Date
+            </th>
+            <th>
+               @* @Html.DisplayNameFor(model => model.ModifiedDate)*@Modified Date
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <input type="checkbox" asp-route-id = "@item.ListId"/>
+                @*<a asp-action="Edit"  asp-route-id="@item.ListId">Edit</a> *@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+
+            
+        </tr>
+}
+    </tbody>
+</table>
+
