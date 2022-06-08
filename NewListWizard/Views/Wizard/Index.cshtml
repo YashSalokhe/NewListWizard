@@ -3,13 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-<head>
-    <script type="text/javascript">
-    function preventBack(){window.history.forward();}
-    setTimeout("preventBack()", 0);
-    window.onunload=function(){null};    
-    </script>
-</head>
+
 <h1>Index</h1>
 
 <div id="placeHolder"></div>
@@ -17,39 +11,39 @@
     <a asp-action="CreateNewList" asp-controller="Wizard" class="btn btn-success button2">Create new List</a>
 </p>*@
 <p>
-    <a  class="btn btn-success button2" onclick="showInPopup('@Url.Action("CreateNewListPartial","Wizard",null,Context.Request.Scheme)','New List Wizard')" >Create new List</a>
+    <a id="wizList"  class="btn btn-success button2" onclick="showInPopup('@Url.Action("CreateNewListPartial","Wizard",null,Context.Request.Scheme)','New List Wizard')" >Create new List</a>
 </p>
-<p>
-    <button type="submit" asp-action="Delete" >Delete</button>
-</p>
-<table class="table table-bordered" id="gridView">
+
+<table class="table table-bordered" id="gridView" border="1">
     <thead>
         <tr>
             <th>
-
+                  <input type="checkbox" id="checkBoxAll" />
             </th>
             <th>
-             @*   @Html.DisplayNameFor(model => model.ListName)*@ListName
+                        ListName
             </th>
             <th>
-             @*   @Html.DisplayNameFor(model => model.AssignedTo)*@Assigned to
+                        Assigned to
             </th>
             <th>
-             @*   @Html.DisplayNameFor(model => model.CreatedDate)*@Created Date
+                        Created Date
             </th>
             <th>
-               @* @Html.DisplayNameFor(model => model.ModifiedDate)*@Modified Date
+                        Modified Date
             </th>
 
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @using(Html.BeginForm("Delete" , "Wizard" , FormMethod.Post)){
+            <input type="submit" value="Delete" onclick="return confirm('are you sure?')" class="btn btn-primary bg-danger"/>
+            @foreach (var item in Model) {
         <tr>
             <td>
-                <input type="checkbox" asp-route-id = "@item.ListId"/>
-                @*<a asp-action="Edit"  asp-route-id="@item.ListId">Edit</a> *@
+                <input type="checkbox" class="checkBoxId"  name="listId" value='@item.ListId'/>
+              
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ListName)
@@ -66,6 +60,7 @@
 
             
         </tr>
+}
 }
     </tbody>
 </table>

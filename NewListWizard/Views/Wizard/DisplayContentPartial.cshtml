@@ -3,14 +3,20 @@
     ViewData["Title"] = "DisplayContentPartial";
   
 }
-
-
+        <h4 >Missing fields are</h4>
+        <div class="res-circle-missing">
+          <div class="circle-txt"> @Model.MissingField</div>
+        </div>
         
-        <h1 >Missing fields are @Model.MissingField</h1>
-        <h1>Imported fields are @Model.ImportedField</h1>
+
+        <h4 >Imported fields are</h4>
+        <div class="res-circle-imported">
+          <div class="circle-txt"> @Model.ImportedField</div>
+        </div>
 
 
-        <table class="table table-bordered">
+
+        <table class="table table-bordered" border="1">
             <tbody>
                 @foreach (var cell in Model.csvContents)
                 {

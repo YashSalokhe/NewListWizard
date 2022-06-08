@@ -40,7 +40,7 @@ namespace NewListWizard.Controllers
                 login.Email = Request.Cookies["Email"];
                 login.Password = Request.Cookies["Password"];
                 login.RememberMe = true;
-                return RedirectToAction("Login", login);
+                return RedirectToAction("LoginPage", login);
             }
            
             return View(login);
@@ -51,11 +51,16 @@ namespace NewListWizard.Controllers
             if (ModelState.IsValid)
             {
 
-                ViewBag.response = await authenticationService.LoginUserAsync(loginUser);
-                return RedirectToAction("Index","Wizard");
-              
+               var response = await authenticationService.LoginUserAsync(loginUser);
+                if(response== "success")
+                {
+                    return RedirectToAction("Index", "Wizard");
+
+                }
+                ViewBag.response = response;
+                return View("LoginPage");
             }
-            return View(loginUser);
+            return View("LoginPage");
 
         }
 

@@ -59,8 +59,9 @@
                             ValidUser.IsRememberMe = (byte)isRememberMe.isRememberMeSetToTrue;
                             http.HttpContext.Response.Cookies.Append("Email", loginUser.Email);
                             http.HttpContext.Response.Cookies.Append("Password", loginUser.Password);
-                            http.HttpContext.Session.SetString("CurrentUserEmail", loginUser.Email);
+                           
                         }
+                        http.HttpContext.Session.SetString("CurrentUserEmail", loginUser.Email);
                         return response = "success";
                     }
                     else

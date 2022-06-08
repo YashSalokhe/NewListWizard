@@ -6,11 +6,11 @@ namespace NewListWizard.Controllers
     public class WizardController : Controller
     {
         private readonly NewListWizardContext wizardContext;
-        private readonly FileService fileService;
-        public WizardController(NewListWizardContext wizardContext, FileService fileService)
+        private readonly ListService listService;
+        public WizardController(NewListWizardContext wizardContext, ListService listService)
         {
             this.wizardContext = wizardContext;
-            this.fileService = fileService;
+            this.listService = listService;
         }
         public async Task<IActionResult> Index()
         {
@@ -20,6 +20,11 @@ namespace NewListWizard.Controllers
 
         public IActionResult CreateNewListPartial()
         {
+            var currentList = HttpContext.Session.GetObject<WizardList>("newListInfo");
+            if(currentList != null)
+            {
+                return PartialView(currentList);
+            }
             return PartialView();
         }
 
@@ -46,8 +51,7 @@ namespace NewListWizard.Controllers
         {
             if (ModelState.IsValid)
             {
-               
-                var result = fileService.FileUploadAsync(uploadedFile).Result;
+                var result = listService.FileUploadAsync(uploadedFile).Result;
                 return new ObjectResult(new { missing = result.MissingField , imported = result.ImportedField/* , contents = result.csvContents*/}) ;
             }
             return View(uploadedFile);
@@ -57,7 +61,8 @@ namespace NewListWizard.Controllers
         {
 
             var result = HttpContext.Session.GetInt32("ListId");
-            var res = wizardContext.CsvContents.Where(x=>x.ListId == result).ToList();
+            var res = wizardContext.CsvContents.Where(x => x.ListId == result).ToList();
+            //var Content = HttpContext.Session.GetObject<List<CsvContent>>("csvContent");
             int missingField = (int)HttpContext.Session.GetInt32("missing");
             int importedField = (int)HttpContext.Session.GetInt32("imported");
             DisplayContent disp = new DisplayContent()
@@ -69,6 +74,27 @@ namespace NewListWizard.Controllers
             return PartialView("DisplayContentPartial",disp);
         }
 
-      
+        [HttpPost]
+        public async Task<IActionResult> Delete(IFormCollection formCollectioin)
+        {
+            string ids = formCollectioin["listId"];
+            if(ids != null)
+            {
+                var str = await listService.DeleteAsync(ids);
+                if (str == "Deleted")
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            
+            return RedirectToAction("Index");
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> SubmitAsync(IFormCollection formCollectioin)
+        //{
+        //    var str = await listService.OnSubmitAsync();
+        //    return RedirectToAction("Index");
+        //}
     }
 }

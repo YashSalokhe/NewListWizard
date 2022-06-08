@@ -22,7 +22,7 @@ builder.Services.AddHttpContextAccessor();
 //builder.Services.AddCookiePolicy();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<MailService>();
-builder.Services.AddScoped<FileService>();
+builder.Services.AddScoped<ListService>();
 
 builder.Services.AddScoped<EncryptDecryptService>();
 

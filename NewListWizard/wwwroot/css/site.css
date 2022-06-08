@@ -22,3 +22,47 @@ body {
     height: 4rem;
     
 }
+
+.res-circle-imported {
+    /* (A) PERCENTAGE WIDTH & BORDER RADIUS */
+    width: 5%;
+    border-radius: 50%;
+    /* (B) BACKGROUND COLOR */
+    background: #0094ff;
+    /* (C) NECESSARY TO POSITION TEXT BLOCK */
+    line-height: 0;
+    position: relative;
+}
+.res-circle-missing {
+    /* (A) PERCENTAGE WIDTH & BORDER RADIUS */
+    width: 5%;
+    border-radius: 50%;
+    /* (B) BACKGROUND COLOR */
+    background: #ff0000;
+    /* (C) NECESSARY TO POSITION TEXT BLOCK */
+    line-height: 0;
+    position: relative;
+}
+
+    /* (D) MATCH HEIGHT */
+    .res-circle-imported::after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+.res-circle-missing::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+/* (E) TEXT BLOCK */
+.circle-txt {
+    /* (E1) CENTER TEXT IN CIRCLE */
+    position: absolute;
+    bottom: 50%;
+    width: 100%;
+    text-align: center;
+    /* (E2) THE FONT - NOT REALLY IMPORTANT */
+    font-family: arial, sans-serif;
+    font-weight: bold;
+}

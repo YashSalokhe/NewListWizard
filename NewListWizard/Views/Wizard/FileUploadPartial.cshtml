@@ -13,7 +13,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" onclick="location.href='@Url.Action("Index", "Wizard")'" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         
@@ -31,14 +31,14 @@
      </div>
     </dl>
     <div class="form-group">
-                <input type="button" onclick="onUploadSubmit()"  value="Finish" class="btn btn-primary" />
+                <input type="button" onclick="location.href='@Url.Action("Index", "Wizard")'" value="Finish" class="btn btn-primary" />
             </div>
-
+            @*onclick="location.href='@Url.Action("SubmitAsync", "Wizard")'"*@ @*@Html.ActionLink(null,"SubmitAsync","Wizard")*@ 
     
 </form>
 
 <p>
-    <a @*asp-action="CreateNewList" asp-controller="Wizard"*@ @* onclick="showInPopup('@Url.Action("CreateNewList","Wizard",null,Context.Request.Scheme)','New List Wizard')"*@ class="btn btn-success button2">Back to list</a>
+    <a onclick="backToWizard()" class="btn btn-success button2">Back to list</a>
 </p>
 
 <div id="showContent"></div>

@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 
 namespace NewListWizard.Services
 {
-    public class FileService
+    public class ListService
     {
       
         private readonly IHttpContextAccessor http;
@@ -13,7 +13,7 @@ namespace NewListWizard.Services
         private readonly NewListWizardContext context;
 
 
-        public FileService(IHttpContextAccessor http, IWebHostEnvironment hostEnvironment, NewListWizardContext context)
+        public ListService(IHttpContextAccessor http, IWebHostEnvironment hostEnvironment, NewListWizardContext context)
         {
             this.hostEnvironment = hostEnvironment;
             this.http = http;
@@ -28,6 +28,7 @@ namespace NewListWizard.Services
 
             createdList.User = context.UserInfos.Where(u=>u.Email == currentUserEmail).First() ;
             IFormFile uploadedFile = upload;
+
             var postedFileName = ContentDispositionHeaderValue
                     .Parse(uploadedFile.ContentDisposition)
                     .FileName.Trim('"');
@@ -52,7 +53,7 @@ namespace NewListWizard.Services
                     var temp = await context.WizardLists.AddAsync(createdList);
                     var hold = await context.SaveChangesAsync();
 
-                   
+
                 }
               //  http.HttpContext.Session.SetObject<WizardList>("ListInfo",createdList);
                 http.HttpContext.Session.SetInt32("ListId", createdList.ListId);
@@ -95,13 +96,43 @@ namespace NewListWizard.Services
                     MissingField = missingFields,
                     ImportedField = presentFields
                 };
-                
+              //  http.HttpContext.Session.SetObject<List<CsvContent>>("csvContent", content);
                  http.HttpContext.Session.SetInt32("missing", newUpload.MissingField);
                  http.HttpContext.Session.SetInt32("imported", newUpload.ImportedField);
+                http.HttpContext.Session.SetObject("newListInfo", new WizardList());
                 return newUpload;
             }
 
             return null;
+        }
+
+
+        public async Task<string>DeleteAsync(string id)
+        {
+            var func = id.Split(new char[] { ',' });
+            foreach (var listId in func)
+            {
+               var list = await context.WizardLists.Where(x => x.ListId == int.Parse(listId)).FirstAsync();
+                list.IsDeleted = (byte)isDeleted.isDeletedSetToTrue;
+            }
+            await context.SaveChangesAsync();
+            return "Deleted";
+        }
+
+        public async Task<string> OnSubmitAsync()
+        {
+            var contentsInCsv = http.HttpContext.Session.GetObject<List<CsvContent>>("csvContent");
+            var wizardList = http.HttpContext.Session.GetObject<WizardList>("newListInfo");
+            var temp = await context.WizardLists.AddAsync(wizardList);
+            var hold = await context.SaveChangesAsync();
+            foreach (var row in contentsInCsv)
+            {
+                row.ListId = wizardList.ListId;
+            }
+           
+            await context.CsvContents.AddRangeAsync(contentsInCsv);
+            await context.SaveChangesAsync();
+            return "success";
         }
     }
 }
